@@ -1,5 +1,4 @@
 # Blog
-=========================
 
 ## Pending
 1. See how we can pick up updates automatically from each repository
