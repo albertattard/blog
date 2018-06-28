@@ -842,12 +842,14 @@ blockquote {
   text-align: center;
 }
 .logo .logo-link {
-  font-family: 'oswald', cursive;
+  font-family: 'oswald';
   display: inline-block;
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 3rem;
-  color: #b2b2b2;
+  text-rendering: optimizelegibility;
+  font-weight: 300;
+  font-size: 25px;
+  color: #FFFFFF;
   -webkit-transition: all .3s;
   transition: all .3s;
 }
