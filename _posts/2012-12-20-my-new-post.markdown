@@ -8,71 +8,14 @@ img: hello-world.png
 author: Albert Attard
 published: true
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+Hello World is the first program found in most programming books ([Wiki](http://en.wikipedia.org/wiki/Hello_world_program)).  Even a book was also written that has Hello World as part of its title ([Hello World(s) — From Code to Culture: A 10 Year Celebration of Java Technology](http://www.amazon.com/Hello-World-From-Code-Culture/dp/0131888676/)).  We cannot have a website about Java without starting with the Hello World example.
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+Following is the classic _Hello World_ program.
 
-Jekyll also offers powerful support for code snippets:
-
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
-
-## Headings
-
-Headings by default:
-
-## Heading first level
-### Heading second level
-#### Heading third level
-
-{% highlight markdown %}
-## Heading first level
-### Heading second level
-#### Heading third level
-{% endhighlight %}
-
-## Lists
-
-Unordered list example:
-* Unordered list item 1
-* Unordered list item 2
-* Unordered list item 3
-* Unordered list item 4
-
-Ordered list example:
-1. Ordered list item 1
-2. Ordered list item 1
-3. Ordered list item 1
-4. Ordered list item 1
-
-{% highlight markdown %}
-* Unordered list item 1
-* Unordered list item 2
-
-1. Order list item 1
-2. Order list item 1
-{% endhighlight %}
-
-
-## Quotes
-
-A quote looks like this:
-
-> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna.
-
-{% highlight markdown %}
-> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna.
-{% endhighlight %}
-
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
-
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+```java
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}
+```
