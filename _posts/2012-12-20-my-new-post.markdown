@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "My new Post"
-description: Hello World is the first program found in most programming books and this blog is not an exception.  Even a book was also written that has Hello World as part of its title (Hello World(s) -- From Code to Culture: A 10 Year Celebration of Java Technology)
+title:  My new Post
+description: Hello World is the first program found in most programming books and this blog is not an exception.  Even a book was also written that has Hello World as part of its title \(Hello World\(s\) \-\- From Code to Culture: A 10 Year Celebration of Java Technology\)
 date: 2012-12-20 08:00:00 +0200
 categories: introduction
 img: hello-world.png
