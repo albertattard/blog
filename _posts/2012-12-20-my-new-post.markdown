@@ -2,7 +2,7 @@
 layout: post
 title:  "My new Post"
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.
-date: 2017-02-08 14:10:25 +0200
+date: 2012-12-20 08:00:00 +0200
 categories: jekyll update
 img: jekyll-poster.png
 author: Jekyll
