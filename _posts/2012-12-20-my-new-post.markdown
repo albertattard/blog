@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "My new Post"
-description: Hello World is the first program found in most programming books and this blog is not an exception
+description: Hello World is the first program found in most programming books and this blog is not an exception.  Even a book was also written that has Hello World as part of its title (Hello World(s) -- From Code to Culture: A 10 Year Celebration of Java Technology).  We cannot have a website about Java without starting with the Hello World example.  As a typical hello word post, this post briefly introduces the blog and how it can be used.
 date: 2012-12-20 08:00:00 +0200
-categories: jekyll update
+categories: introduction
 img: hello-world.png
 author: Albert Attard
 ---
