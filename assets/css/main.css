@@ -1136,7 +1136,7 @@ blockquote {
       -ms-flex-direction: column;
           flex-direction: column;
   background-color: #478F0D;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.9);
   border-top: 8px solid rgba(0, 0, 0, 0.5);
   margin-top: -8px;
   padding: 4rem 3rem;
