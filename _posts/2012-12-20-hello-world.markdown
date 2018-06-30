@@ -7,7 +7,6 @@ categories: introduction
 img: hello-world.png
 author: Albert Attard
 ---
-
 Hello World is the first program found in most programming books ([Wiki](http://en.wikipedia.org/wiki/Hello_world_program)).  Even a book was also written that has Hello World as part of its title ([Hello World(s) — From Code to Culture: A 10 Year Celebration of Java Technology](http://www.amazon.com/Hello-World-From-Code-Culture/dp/0131888676/)).  We cannot have a website about Java without starting with the Hello World example.
 
 Following is the classic _Hello World_ program.
