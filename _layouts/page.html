@@ -14,6 +14,8 @@
             {% endif %}
             {{page.content | markdownify}}
           </article>
+          {% include share.html %}
+          {% include disqus.html %}
         </div>
       </div>
     </main>
