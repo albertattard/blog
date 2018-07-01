@@ -825,7 +825,6 @@ blockquote {
 
 .site-header {
   position: fixed;
-  text-align: center;
   background-color: rgba(62, 138, 1, 0.95);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
   top: 0;
@@ -846,11 +845,13 @@ blockquote {
   text-decoration: none;
   text-transform: uppercase;
   text-rendering: optimizelegibility;
+  text-align: left;
   font-weight: 300;
   font-size: 25px;
   color: #FFFFFF;
   -webkit-transition: all .3s;
   transition: all .3s;
+  padding-left: 10px;
 }
 .logo .logo-link:hover {
   color: rgba(245, 222, 179, 0.75);
@@ -1211,7 +1212,7 @@ blockquote {
   margin-bottom: 1rem;
 }
 .page-content h1 {
-  color: #6D4C41;
+  color: #478F0D;
 }
 .page-content img {
   width: 100%;
@@ -1231,6 +1232,11 @@ blockquote {
 
 .article-comments {
   padding-top: 1rem;
+}
+
+.side-ads-pane {
+  width: 200px;
+  display: inline-block;
 }
 
 @media screen and (min-width: 500px) {
