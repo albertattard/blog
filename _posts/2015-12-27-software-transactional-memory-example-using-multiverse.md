@@ -3,8 +3,9 @@ layout: post
 title:  Software Transactional Memory Example using Multiverse
 description: Transactions are an essential part of any business critical application as these ensure the integrity of the data being managed by the same application.  Transactions ensure that the data remains in a consistent and integral state after this is manipulated, thus mitigating the risk of invalid states.  Databases are synonymous with transactions, and many programming languages rely on the underlying database to provide the required transactional support.  This works well when all modified state is found at the database level.  Unfortunately, this is not always the case and there can be cases where the state is found at the application level rather than the database level.  In this article we will see how we can use Multiverse, a Software Transactional Memory, to provide transactions at the software level without using any databases.
 date: 2015-12-27 08:00:00 +0200
-categories: concurrency
+categories: multiverse, concurrency
 img: software-transactional-memory-example-using-multiverse/splash.png
+permalink: software-transactional-memory-example-using-multiverse
 author: Albert Attard
 published: true
 ---
