@@ -1239,6 +1239,11 @@ blockquote {
   display: inline-block;
 }
 
+.img-inline-32 {
+  display: inline;
+  width: 32px;
+}
+
 @media screen and (min-width: 500px) {
   html {
     font-size: calc(15px + 5 * ((100vw - 500px) / 900));
