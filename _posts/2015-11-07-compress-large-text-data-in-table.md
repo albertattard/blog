@@ -186,7 +186,7 @@ The class shown above may seem long and overwhelming but it is quite straightfor
     The above code makes use of an abstract method, which method is implemented at a later stage by each test class.
 
     ```java
-  protected abstract void setPreparedStatement(String data, PreparedStatement statement) throws Exception;
+    protected abstract void setPreparedStatement(String data, PreparedStatement statement) throws Exception;
     ```
 
     This method will update the prepared statement with the correct data type, such as uncompressed text or compressed text (as a stream).  As hinted above, the write to table process is similar for all tests with the exception of one this, that is, what is written to the database.  This is defined by this method and each test will implement its approach.
