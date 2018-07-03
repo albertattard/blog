@@ -276,7 +276,7 @@ The `verify()` method is described in detail next.
           }
     ```
 
-The actual retrieval of the information is delegated to the subclass.
+    The actual retrieval of the information is delegated to the subclass.
 
     ```java
       protected abstract String parseRow(ResultSet resultSet) throws Exception;
