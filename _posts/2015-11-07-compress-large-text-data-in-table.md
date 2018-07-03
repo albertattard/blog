@@ -282,7 +282,7 @@ The actual retrieval of the information is delegated to the subclass.
       protected abstract String parseRow(ResultSet resultSet) throws Exception;
     ```
 
-Each test can then implement the appropriate method to retrieve the data from the `ResultSet` ([Java Doc](http://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html)) and convert it back to a string.
+    Each test can then implement the appropriate method to retrieve the data from the `ResultSet` ([Java Doc](http://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html)) and convert it back to a string.
 
 1. Finally, we measure the time taken and log this.
 
