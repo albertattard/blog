@@ -10,21 +10,21 @@ author: Albert Attard
 published: true
 ---
 
-There can be cases where we need to save large text data into a database tables.  This data can take lots of space and may introduce new challenges which needs to be addressed.  Backups for example may take longer and if uncompressed, these will take more space.  In this article we explore several possibilities available when dealing with large data and compare the results obtained.
+There can be cases where we need to save large text data into a database table.  This data can take lots of space and may introduce new challenges which need to be addressed.  Backups, for example, may take longer and if uncompressed, these will take more space.  In this article, we explore several possibilities available when dealing with large data and compare the results obtained.
 
 All code listed below is available at [Git Hub](https://github.com/javacreed/compress-large-text-data-in-table).  Most of the examples will not contain the whole code and may omit fragments which are not relevant to the example being discussed. The readers can download or view all code from the above link.
 
-In this article we make use of the MySQL database ([Homepage](https://www.mysql.com/)) and the SQL statements used may not work as expected with different databases.
+In this article, we make use of the MySQL database ([Homepage](https://www.mysql.com/)) and the SQL statements used may not work as expected with different databases.
 
-This article is divided into three sections.  It starts by introducing the database structure and some common code which are used by the following section.  The second section compares several approaches and highlights their strengths and weaknesses.  In the last section is compares the results obtained in the previous section and provides a conclusion.
+This article is divided into three sections.  It starts by introducing the database structure and some common code which are used in the following section.  The second section compares several approaches and highlights their strengths and weaknesses.  In the last section is compares the results obtained in the previous section and provides a conclusion.
 
 ## Introduction
 
-In this section we go through the database and the tables used together with some common code.  Some changes may be required depending environment where this is executed.  The article flags all areas where changed may be required.
+In this section, we go through the database and the tables used together with some common code.  The article flags all areas where changes may be required.
 
 ### Database
 
-In this article we discuss how to compress large text data and saved this into a database table.  The examples used in this article make use of one of the following two tables which can be created using the following SQL code.
+In this article, we discuss how to compress large text data and saved this into a database table.  The examples used in this article make use of one of the following two tables which can be created using the following SQL code.
 
 ```sql
 DROP TABLE IF EXISTS `large_text_table`;
@@ -43,9 +43,11 @@ CREATE TABLE `compressed_table` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ```
 
-We have two test tables one holds the plain text data while the second holds the binary data.  The above SQL was executed against a MySQL database and uses the MyISAM ([Wiki](https://en.wikipedia.org/wiki/MyISAM)) table structure which is considerable faster than the alternative option InnoDB ([Wiki](https://en.wikipedia.org/wiki/InnoDB)).  Given that we do not need transactional support, we opted for this database engine to minimise the database overheads.  Some alterations may be required if a different database is used.
+We have two test tables one holds the plain text data while the second holds the binary data.  The above SQL was executed against a MySQL database and uses the MyISAM ([Wiki](https://en.wikipedia.org/wiki/MyISAM)) table structure which is considerably faster than the alternative option InnoDB ([Wiki](https://en.wikipedia.org/wiki/InnoDB)).  Given that we do not need transactional support, we opted for this database engine to minimise the database overheads.  Some alterations may be required if a different database is used.
 
-The data source is provided by the following utilities class, which for simplicity hard codes the database settings.
+**Please be careful when choosing the database engine as this may have negative repercussions.**  Do not simply pick MyISAM just because it is faster.  MyISAM lack transaction support which may be required by your application.
+
+The data source is provided by the following utility class, which for simplicity hard codes the database settings.
 
 ```java
 public class DatabaseUtils {
@@ -53,7 +55,7 @@ public class DatabaseUtils {
     final BasicDataSource dataSource = new BasicDataSource();
     dataSource.setDriverClassName("com.mysql.jdbc.Driver");
     dataSource.setUrl("jdbc:mysql://localhost:3306/test_large_text");
-    dataSource.setUsername("root");
+    dataSource.setUsername("user");
     dataSource.setPassword("@?#%&£!");
     return dataSource;
   }
@@ -64,7 +66,7 @@ Kindly update the above database configuration as required.
 
 ### Common Code
 
-In this article we will see how we can compress text data to reduce the space used and also possibly protect such data using encryption algorithms.  In order to facilitate the tests three classes were added which performs the following
+In this article, we will see how we can compress text data to reduce the space used and also possibly protect such data using encryption algorithms.  In order to facilitate the tests, three classes were added which performs the following
 
 1. Write data into a database table
 1. Read data from the database table and validate it
@@ -131,89 +133,77 @@ public abstract class WriteDataToTable {
 }
 ```
 
-The class shown above may seem long and overwhelming but it is quite straightforward.  In a nutshell, the class reads a long text file and inserts the same text data several times into the same database table.  This class abstracts the part where the prepare statement sets the value to be passed to the database.  This will vary between test to test and is left for the implementation to deal with.  The rest of the code is the same for all tests implementations.  The `insert()` method is described in some details next.
+The class shown above may seem long and overwhelming but it is quite straightforward.  In a nutshell, the class reads a long text file and inserts the same text data several times into the same database table.  This class abstracts the part where the prepared statement sets the value to be passed to the database.  This will vary between test to test and is left for the implementation to deal with.  The rest of the code is the same for all tests implementations.  The `insert()` method is described in some details next.
 
 
-<ul>
-<li>
-The test inserts large text data into a database table.  This data is read from the resources available with the same project.  This is Shakespeare's Hamlet play (<a href="https://en.wikipedia.org/wiki/Hamlet" target="_blank">Wiki</a>).
+1. The test inserts large text data into a database table.  This data is read from the resources available with the same project.  This is Shakespeare's Hamlet play ([Wiki](https://en.wikipedia.org/wiki/Hamlet)).
 
-<pre>
-    // The data to be saved in the database
-    final String hamlet = IOUtils.toString(WriteDataToTable.class.getResourceAsStream("/Shakespeare Hamlet.txt"), "UTF-8");
-</pre>
+    ```java
+        // The data to be saved in the database
+        final String hamlet = IOUtils.toString(WriteDataToTable.class.getResourceAsStream("/Shakespeare Hamlet.txt"), "UTF-8");
+    ```
 
-The Apache IO Common <code>IOUtils</code> class (<a href="https://commons.apache.org/proper/commons-io/apidocs/org/apache/commons/io/IOUtils.html" target="_blank">Java Doc</a>) is used to ready this play as a string.
-</li>
+    The Apache IO Common `IOUtils`</code> class ([Java Doc](https://commons.apache.org/proper/commons-io/apidocs/org/apache/commons/io/IOUtils.html)) is used to ready this play as a string.
 
-<li>
-The table where the data is written is emptied so that all tests start on an empty table.
+1. The table where the data is written is emptied so that all tests start on an empty table.
 
-<pre>
-    // Clear table
-    WriteDataToTable.LOGGER.debug("Clearing table so that the test starts on a fresh table");
-    clearTable();
-</pre>
+    ```java
+        // Clear table
+        WriteDataToTable.LOGGER.debug("Clearing table so that the test starts on a fresh table");
+        clearTable();
+    ````
 
-<strong>The table needs to be empty as the validation process reads all records from this table and compares them with the original text to make sure that what is written can also be correctly read</strong>.
+    **The table needs to be empty as the validation process reads all records from this table and compares them with the original text to make sure that what is written can also be correctly read**.
 
-A small note about the <code>clearTable()</code> method.  This method makes use of the <code>TRUNCATE TABLE</code> SQL statement which may behave differently on different databases.  For example, in MySQL the <code>TRUNCATE TABLE</code> SQL also resets the auto generated ids while in H2 Database (<a href="http://www.h2database.com/html/main.html" target="_blank">Homepage</a>) it just empties the table.
+    A small note about the `clearTable()` method.  This method makes use of the `TRUNCATE TABLE` SQL statement which may behave differently on different databases.  For example, in MySQL, the `TRUNCATE TABLE` SQL also resets the auto-generated ids while in H2 Database ([Homepage](http://www.h2database.com/html/main.html)) it just empties the table.
 
-<pre>
-  protected void clearTable() throws SQLException {
-    try (Statement statement = connection.createStatement()) {
-      statement.execute("TRUNCATE TABLE `" + tableName + "`");
-    }
-  }
-</pre>
+    ```java
+     protected void clearTable() throws SQLException {
+       try (Statement statement = connection.createStatement()) {
+         statement.execute("TRUNCATE TABLE `" + tableName + "`");
+       }
+     }
+    ```
 
-Kindly change this method to accommodate your database requirements.
-</li>
+    Kindly change this method to accommodate your database requirements.
 
-<li>
-The same data is inserted several times in order to be able to make a better measurement.  
-This process is measured to determine how long it takes to prepare the data to be written and write the data to the database table.
+1. The same data is inserted several times in order to be able to make a better measurement.  This process is measured to determine how long it takes to prepare the data to be written and write the data to the database table.
 
-<pre>
-    WriteDataToTable.LOGGER.debug("Inserting the sample data {} time in table '{}'", testSize, tableName);
-    final long startedInMillis = System.currentTimeMillis();
-    // Insert the text several times in the database using prepared statement
-    for (int i = 0; i &lt; testSize; i++) {
-      try (PreparedStatement statement = connection.prepareStatement("INSERT INTO `" + tableName + "` (`" + columnName + "`) VALUES (?)")) {
-        setPreparedStatement(hamlet, statement);
-        statement.execute();
-      }
-    }
-</pre>
+    ```java
+        WriteDataToTable.LOGGER.debug("Inserting the sample data {} time in table '{}'", testSize, tableName);
+        final long startedInMillis = System.currentTimeMillis();
+        // Insert the text several times in the database using prepared statement
+        for (int i = 0; i < testSize; i++) {
+          try (PreparedStatement statement = connection.prepareStatement("INSERT INTO `" + tableName + "` (`" + columnName + "`) VALUES (?)")) {
+            setPreparedStatement(hamlet, statement);
+            statement.execute();
+          }
+        }
+    ```
 
-Smaller samples may be easily affected by some anomalies caused by the underlying systems, such as the OS or DB, and it is always recommended to run with a decent sample size.  The decent sample varies from one problem to another and in this case we used a size of thousands records.  We do so as this sample size is large enough to absorb any discrepancies caused by the underlying systems .
+    Smaller samples may be easily affected by some anomalies caused by the underlying systems, such as the OS or DB, and it is always recommended to run with a decent sample size.  The decent sample varies from one problem to another and in this case we used a size of thousands of records.  We do so as this sample size is large enough to absorb any discrepancies caused by the underlying systems.
 
-The above code makes use of an abstract method, which method is implemented at a later stage by each test class.
+    The above code makes use of an abstract method, which method is implemented at a later stage by each test class.
 
-<pre>
+    ```java
   protected abstract void setPreparedStatement(String data, PreparedStatement statement) throws Exception;
-</pre>
+    ```
 
-This method will update the prepared statement with the correct data type, such as uncompressed text or compressed text (as a stream).  As hinted above, the write to table process is similar for all tests with the exception of one this, that is, what is written to the database.  This is defined by this method and each test will implement its approach.
-</li>
+    This method will update the prepared statement with the correct data type, such as uncompressed text or compressed text (as a stream).  As hinted above, the write to table process is similar for all tests with the exception of one this, that is, what is written to the database.  This is defined by this method and each test will implement its approach.
 
-<li>
-Finally we calculate the time taken in milliseconds and return this value
-<pre>
-    final long takenInMillis = System.currentTimeMillis() - startedInMillis;
-    WriteDataToTable.LOGGER.debug("Inserted {} records in {} millis", testSize, takenInMillis);
-    return takenInMillis;
-</pre>
-</li>
-</ul>
+1. Finally, we calculate the time taken in milliseconds and return this value
 
+    ```java
+        final long takenInMillis = System.currentTimeMillis() - startedInMillis;
+        WriteDataToTable.LOGGER.debug("Inserted {} records in {} millis", testSize, takenInMillis);
+        return takenInMillis;
+    ```
 
 As described above, this class provides all common code required to write data into a test table.  The next class reads the data back from the test table and makes sure that the correct data is found in this table.  There is no point if the example corrupts the data and write unreadable data.
 
+The next class reads all data saved in test table and compare the value read with the original text.  Like before, the `ReadDataFromTable` is abstract and leaves the actual reading to be implemented by each individual test.  This allows for each test to determine how the data is read from the table.
 
-The next class reads all data saved in test table and compare the value read with the original text.  Like before, the <code>ReadDataFromTable</code> is abstract and leaves the actual reading to be implemented by each individual test.  This allows for each test to determine how the data is read from the table.
-
-<pre>
+```java
 public abstract class ReadDataFromTable {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ReadDataFromTable.class);
@@ -256,62 +246,54 @@ public abstract class ReadDataFromTable {
     }
   }
 }
-</pre>
+```
+
+The `verify()` method is described in detail next.
 
 
-The <code>verify()</code> method is described in detail next.
+1. The original data is read again from the source file.
 
+    ```java
+        // The data to be saved in the database
+        final String hamlet = IOUtils.toString(ReadDataFromTable.class.getResourceAsStream("/Shakespeare Hamlet.txt"), "UTF-8");
+    ```
 
-<ul>
-<li>
-The original data is read again from the source file.
+    This will be used to compare each row read and makes sure that the read value is the same as the original text.
 
-<pre>
-    // The data to be saved in the database
-    final String hamlet = IOUtils.toString(ReadDataFromTable.class.getResourceAsStream("/Shakespeare Hamlet.txt"), "UTF-8");
-</pre>
+1. Reads all data from the table using a prepared statement and validated each row read.
 
-This will be used to compare each row read and makes sure that the read value is the same as the original text.
-</li>
+    ```java
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT `" + columnName + "` FROM `" + tableName + "`");
+            ResultSet resultSet = preparedStatement.executeQuery()) {
 
-<li>
-Reads all data from the table using a prepared statement and validated each row read.
-
-<pre>
-    try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT `" + columnName + "` FROM `" + tableName + "`");
-        ResultSet resultSet = preparedStatement.executeQuery()) {
-
-      int rowNumber = 0;
-      final long startedOnInMillis = System.currentTimeMillis();
-      for (; resultSet.next(); rowNumber++) {
-        final String inTable = parseRow(resultSet);
-        if (hamlet.equals(inTable) == false) {
-          throw new RuntimeException("Invalid data found in row " + rowNumber);
-        }
-      }
-</pre>
+          int rowNumber = 0;
+          final long startedOnInMillis = System.currentTimeMillis();
+          for (; resultSet.next(); rowNumber++) {
+            final String inTable = parseRow(resultSet);
+            if (hamlet.equals(inTable) == false) {
+              throw new RuntimeException("Invalid data found in row " + rowNumber);
+            }
+          }
+    ```
 
 The actual retrieval of the information is delegated to the subclass.
 
-<pre>
-  protected abstract String parseRow(ResultSet resultSet) throws Exception;
-</pre>
+    ```java
+      protected abstract String parseRow(ResultSet resultSet) throws Exception;
+    ```
 
-Each test can then implement the appropriate method to retrieve the data from the <code>ResultSet</code> (<a href="http://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html" target="_blank">Java Doc</a>) and convert it back to string.
-</li>
+Each test can then implement the appropriate method to retrieve the data from the `ResultSet` ([Java Doc](http://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html)) and convert it back to a string.
 
-<li>
-Finally we measure the time taken and log this.
-<pre>
-      final long takenInMillis = System.currentTimeMillis() - startedOnInMillis;
-      ReadDataFromTable.LOGGER.debug("Verified {} record in {} millis", rowNumber, takenInMillis);
-</pre>
-</li>
-</ul>
+1. Finally, we measure the time taken and log this.
 
-For convenience, these two class are grouped into one class which is shown next.
+    ```java
+          final long takenInMillis = System.currentTimeMillis() - startedOnInMillis;
+          ReadDataFromTable.LOGGER.debug("Verified {} record in {} millis", rowNumber, takenInMillis);
+    ```
 
-<pre>
+For convenience, these two classes are grouped into one class which is shown next.
+
+```java
 public abstract class ExampleTest {
 
   private WriteDataToTable writeDataToTable;
@@ -345,26 +327,21 @@ public abstract class ExampleTest {
   protected abstract void setPreparedStatement(String data, PreparedStatement statement) throws Exception;
 
 }
-</pre>
+```
 
+This class is quite simple.  It has two abstract methods, one responsible for writing the data and the other for reading the data.  These have the same method signature as those found in `WriteDataToTable` and  `ReadDataFromTable`.
 
-This class is quite simple.  It has two abstract methods, one responsible from writing the data and the other from reading the data.  These have the same method signature as those found in <code>WriteDataToTable</code> and  <code>ReadDataFromTable</code>.
+The tests shown in the following sections make use of this class and override these two methods with the appropriate implementation.
 
+## Tests
 
-The tests shown in the following sections make use this class and override these two methods with the appropriate implementation.
+In this section, we carry out fours tests and compare their results.
 
-
-<h2>Tests</h2>
-
-In this section we carry out fours tests and compare their results.
-
-
-<h3>Plain Large Text</h3>
-
+### Plain Large Text
 
 The first test writes the data as it comes.  It does not alter the data and simply write and reads the data as text.
 
-<pre>
+```java
 public class Example1 {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Example1.class);
@@ -387,18 +364,15 @@ public class Example1 {
     Example1.LOGGER.debug("Done");
   }
 }
-</pre>
+```
 
+Inserting a thousand records of the long text play, Shakespeare's Hamlet, into the table without modifying it take almost 8 seconds.  Reading such data is quite fast as it takes less than half of a second.
 
-Inserting thousand records of the long text play, Shakespeare's Hamlet, into the table without modifying it take almost 8 seconds.  Reading such data is quite fast as it takes less than half of a second.
+## GZIP
 
+In the second example, we compress the data using the Java implementation of the GZIP ([Package Summary](https://docs.oracle.com/javase/7/docs/api/java/util/zip/package-summary.html)) lossless compression algorithm as shown next.
 
-<h3>GZIP</h3>
-
-
-In the second example, we compress the data using the lossless compression Java implementation of GZIP (<a href="https://docs.oracle.com/javase/7/docs/api/java/util/zip/package-summary.html" target="_blank">Package Summary</a>) as shown next.
-
-<pre>
+```java
 public class Example2 {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Example2.class);
@@ -428,29 +402,25 @@ public class Example2 {
     Example2.LOGGER.debug("Done");
   }
 }
-</pre>
-
+```
 
 The data is compressed before written to the database as shown next.
 
-<pre>
+```java
           final ByteArrayOutputStream baos = new ByteArrayOutputStream(data.length());
           try (OutputStream out = new GZIPOutputStream(baos, data.length())) {
             out.write(data.getBytes("UTF-8"));
           }
           statement.setBinaryStream(1, new ByteArrayInputStream(baos.toByteArray()));
-</pre>
+```
 
+The data is compressed every time before writing it into the table to simulate a production environment.  One understands that compression will increase in the time required as additional processing is required.  On the other hand, such approach writes fewer data to the disk which should improve the write time and compensate for the time lost during compression.  Unfortunately, this approach is quite slow and the compression takes far longer than what is saved from writing fewer data to the disk.  Inserting a thousand records of the long text play, Shakespeare's Hamlet, into the table after compressing each instance takes more than 19 seconds.  Reading such data is slower too as it needs more than 2 seconds.  This approach reduced the space required by more than half, but it takes more to process.  In summary, this approach trades time with space.  You need less space on disk but requires further processing time.
 
-The data is compressed every time to simulate a production environment, where the data is compressed before writing it.  One understands that compression will increase in the time required as additional processing is required.  On the other hand, such approach writes less data to the disk which should improve the write time and compensate for the time lost during compression.  Unfortunately this approach is quite slow and the compression takes far longer than what is saved from writing less data to the disk.  Inserting thousand records of the long text play, Shakespeare's Hamlet, into the table after compressing each instance takes more than 19 seconds.  Reading such data is slower too as it need more that 2 seconds.  This approach reduced the space required by more than half, but it takes more to process.  In summary, this approach trades time with space.  You need less space on disk but requires further processing time.
+### LZ4
 
+LZ4 ([Homepage](http://cyan4973.github.io/lz4/)) is another lossless compression algorithm, similar to GZIP, which is considerably faster than GZIP as we will see in this test.
 
-<h3>LZ4</h3>
-
-
-LZ4 (<a href="http://cyan4973.github.io/lz4/" target="_blank">Homepage</a>) is an other lossless compression algorithm, similar to GZIP, which is considerably faster than GZIP as we will see in this test.
-
-<pre>
+```java
 public class Example3 {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Example3.class);
@@ -479,32 +449,27 @@ public class Example3 {
     Example3.LOGGER.debug("Done");
   }
 }
-</pre>
+```
 
-Instead of <code>GZIPOutputStream</code> (<a href="http://docs.oracle.com/javase/7/docs/api/java/util/zip/GZIPOutputStream.html" target="_blank">Java Doc</a>), in this example we use <code>LZ4BlockOutputStream</code> (<a href="https://github.com/jpountz/lz4-java/blob/master/src/java/net/jpountz/lz4/LZ4BlockOutputStream.java" target="_blank">Source Code</a>) as shown next.
+Instead of `GZIPOutputStream` ([Java Doc](http://docs.oracle.com/javase/7/docs/api/java/util/zip/GZIPOutputStream.html)), in this example we use `LZ4BlockOutputStream` ([Source Code](https://github.com/jpountz/lz4-java/blob/master/src/java/net/jpountz/lz4/LZ4BlockOutputStream.java)) as shown next.
 
-
-<pre>
+```java
           final ByteArrayOutputStream baos = new ByteArrayOutputStream(data.length());
           try (OutputStream out = new LZ4BlockOutputStream(baos)) {
             out.write(data.getBytes("UTF-8"));
           }
           statement.setBinaryStream(1, new ByteArrayInputStream(baos.toByteArray()));
-</pre>
+```
 
+LZ4 is faster compared to GZIP and faster to write data even when compared to the plain text approach.  Compressing and inserting a thousand records takes about 5 seconds.  Reading data is faster than GZIP as it needs about 800 milliseconds, but slightly slower when compared to the plain text method.  Therefore, this method is faster when it comes to writing but a bit slower when it comes to reading.
 
-LZ4 is faster compared to GZIP and faster to write data even when compared to the plain text approach.  Compressing and inserting thousand records takes about 5 seconds.  Reading data is faster than GZIP as it needs about 800 milliseconds, but slightly slower when compared to the plain text method.  Therefore, this method is faster when it comes writing but a bit slower when it comes to reading.  It is important to note that this algorithm performs worse when it comes to size required.
+LZ4 can be tuned to compress the data further at a cost of performance, but in this example, we used the default settings.  Furthermore, we can reduce the compression ration and obtain faster performance too at the cost of space.
 
+### LZ4 and Encryption
 
-LZ4 can be tuned to compress the data further at a cost of performance, but in this example we used the default settings.  Furthermore, we can reduce the compression ration and obtain faster performance too.
+As a final test, we encrypt the data using AES ([Wiki](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard)) after this is compressed with the LZ4 compression algorithm with the default settings as above.  As one would expect encryption will add an overhead and this example is expected to obtain worse results when compared with the previous test.
 
-
-<h3>LZ4 and Encryption</h3>
-
-
-As a final test, we encrypt the data using AES (<a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard" target="_blank">Wiki</a>) after this is compressed with the LZ4 compression algorithm with the default settings as above.  As one would expect encryption will add an overhead and this this example will obtain worse results when compared with the previous test.
-
-<pre>
+```java
 public class Example4 {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Example4.class);
@@ -535,27 +500,20 @@ public class Example4 {
     Example4.LOGGER.debug("Done");
   }
 }
-</pre>
+```
 
+As expected this approach is somewhat slower than the previous one.  To compress and then encrypt a thousand records take almost 10 seconds which is almost twice as much as the version that does not use encryption.  Reading and decryption are considerably slower too when compared to the previous approach.  The overhead added by the decryption process makes this the worse approach from all tests.  This approach requires the same size as the one before as the encryption does not inflate or deflate the message.
 
-As expected this approach is somewhat slower than the previous one.  To compress and then encrypt thousand records take almost 10 seconds which is almost twice as much as the version that does not use encryption.  Reading and decryption is considerably slower too when compared to the previous approach.  The overhead added by the decryption process makes this the worse approach from all tests.  This approach requires the same size as the one before as the encryption does not inflate or deflate the message.
+## Comparison
 
+In the previous section, we described fours tests cases, where each test case inserted a thousand records and then read and verify these records.  The following stacked graph compares the time required to write and then read these records.
 
-<h2>Comparison</h2>
-
-In the previous section we described fours tests, where each test inserts a thousand records and then reads and verify these records.  The following stacked graph compares the time required to write and then read these records.
-
-
-[caption id="attachment_5363" align="aligncenter" width="595"]<a href="http://www.javacreed.com/wp-content/uploads/2015/11/Write-and-Reed-Performance.png" class="preload" rel="prettyphoto" title="Write and Reed Performance" ><img src="http://www.javacreed.com/wp-content/uploads/2015/11/Write-and-Reed-Performance.png" alt="Write and Reed Performance" width="595" height="370" class="size-full wp-image-5363" /></a> Write and Reed Performance[/caption]
-
+![Write and Reed Performance]({{ "/assets/images/compress-large-text-data-in-table/write-and-reed-performance.png" | absolute_url }})
 
 In all cases, the write was slower than the read.  The next bar graph compares the space required on the disk.
 
+![Tables Sizes]({{ "/assets/images/compress-large-text-data-in-table/tables-sizes.png" | absolute_url }})
 
-[caption id="attachment_5364" align="aligncenter" width="598"]<a href="http://www.javacreed.com/wp-content/uploads/2015/11/Tables-Sizes.png" class="preload" rel="prettyphoto" title="Tables Sizes" ><img src="http://www.javacreed.com/wp-content/uploads/2015/11/Tables-Sizes.png" alt="Tables Sizes" width="598" height="368" class="size-full wp-image-5364" /></a> Tables Sizes[/caption]
+As expected, the plain text test requires most space while GZIP requires the least space.  Compressing data makes the data smaller and reduces the required space, but this comes at a cost of performance.  While database backups may run faster, processing such data will be hindered as it needs to be uncompressed first.  
 
-
-As expected, the plain text test requires most space while GZIP requires the least space.
-
-
-Compressing data makes the data smaller and reduces the required space, but this come at a cost of performance.  While database backups may run faster, processing such data will be hindered.  It is imperative to measure the changes before applying these to a production environment.
+Premature optimisation is the root of all evil.  It is imperative to measure the changes before applying them.  Setting up a small and isolated test similar to the one shown here is not complex.  Many are those who simply go ahead and implement such changes in production without measuring their impact first.  Such approach may come with a detriment effect on the overall system performance.
