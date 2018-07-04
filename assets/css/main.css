@@ -1214,8 +1214,15 @@ blockquote {
 .page-content h1 {
   color: #478F0D;
 }
+
 .page-content img {
-  width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  padding: 3px;
+  border: 1px solid #607D8B;
+  border-radius: 3px;
 }
 
 .post-share {
@@ -1239,9 +1246,20 @@ blockquote {
   display: inline-block;
 }
 
-.img-inline-32 {
-  display: inline;
-  width: 32px;
+table {
+  display: inline-block;
+  max-width: 100%;
+  padding: 5px;
+  border: 1px solid #607D8B;
+  border-radius: 3px;
+}
+
+table thead {
+  background:rgba(180,180,180,0.5);
+}
+
+tbody tr:nth-of-type(even){
+  background:rgba(220,220,220,0.5);
 }
 
 @media screen and (min-width: 500px) {

@@ -143,7 +143,7 @@ The class shown above may seem long and overwhelming but it is quite straightfor
         final String hamlet = IOUtils.toString(WriteDataToTable.class.getResourceAsStream("/Shakespeare Hamlet.txt"), "UTF-8");
     ```
 
-    The Apache IO Common `IOUtils`</code> class ([Java Doc](https://commons.apache.org/proper/commons-io/apidocs/org/apache/commons/io/IOUtils.html)) is used to ready this play as a string.
+    The Apache IO Common `IOUtils` class ([Java Doc](https://commons.apache.org/proper/commons-io/apidocs/org/apache/commons/io/IOUtils.html)) is used to ready this play as a string.
 
 1. The table where the data is written is emptied so that all tests start on an empty table.
 
