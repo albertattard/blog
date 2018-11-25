@@ -21,7 +21,7 @@ This article starts from the configuration process, where it describes from wher
 
 ## Configuration
 
-As mentioned already, the examples shown in this article make use of a third party native library named MediaInfo, which library can be downloaded from: [http://mediaarea.net/en/MediaInfo/Download](http://mediaarea.net/en/MediaInfo/Download).   As shown in the following image, the MediaInfo comes in several flavours.  For the purpose of this article, we only need the Command Line Interface version.
+As mentioned already, the examples shown in this article make use of a third party native library named MediaInfo, which library can be downloaded from: [http://mediaarea.net/en/MediaInfo/Download](http://mediaarea.net/en/MediaInfo/Download).  As shown in the following image, the MediaInfo comes in several flavours.  For the purpose of this article, we only need the Command Line Interface version.
 
 ![Download the CLI Version](/blog/assets/images/how-to-retrieve-the-video-properties/Download-the-CLI-Version.png)
 
