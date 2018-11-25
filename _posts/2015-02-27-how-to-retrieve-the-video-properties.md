@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  How to Retrieve the Video Properties
-description:
+description: Videos properties, such as frames per seconds, can be easily obtained using Media Properties library.  This third party library provides more than simple frames per second as described in this article.
 date: 2015-02-27 08:00:00 +0200
 categories: video-properties
 img: how-to-retrieve-the-video-properties/splash.png
