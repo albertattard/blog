@@ -9,7 +9,6 @@ permalink: how-to-cache-results-to-boost-performance
 author: Albert Attard
 published: true
 ---
-
 Albert Einstein ([Wiki](http://en.wikipedia.org/wiki/Albert_Einstein)) defines _insanity_ as follows:
 
 > Insanity: doing the same thing over and over again and expecting different results ([reference](http://www.brainyquote.com/quotes/quotes/a/alberteins133991.html))
@@ -76,11 +75,11 @@ The example shown above, caches the values in a `Map` ([Java Doc](http://docs.or
 
     Say that two threads need to retrieve the same Fibonacci number which is not in cache.  Using this approach, both threads will end up computing the same value.  Thus the same value ends up being computed twice.  The following image captures this problem.
 
-    ![Compute the same value twice](how-to-cache-results-to-boost-performance/Compute-the-same-value-twice.png)
+    ![Compute the same value twice](/blog/assets/images/how-to-cache-results-to-boost-performance/Compute-the-same-value-twice.png)
 
     This problem not only it defeats the caching purpose, but duplicates the computational power required (or slows the end result as the machine throughput is halved) as shown in the following image.
 
-    ![Use twice the required resources](how-to-cache-results-to-boost-performance/Use-twice-the-required-resources.png)
+    ![Use twice the required resources](/blog/assets/images/how-to-cache-results-to-boost-performance/Use-twice-the-required-resources.png)
 
     This problem may seem mild but it can have serious implications to both memory and CPU resources.  Note that the purpose of using caching is to reduce the computations by retrieving the result from cache.
 
@@ -201,7 +200,7 @@ This class is less than 55 lines of code and meets all our requirements as expla
 
     The `Future` represents the code that will compute and return the value.  There will be only one future for any given key (as we will see later on).  When thread 1 adds the `Future` instance to the cache, thread 2 will obtain the same `Future` instance and will both wait for this to finish.
 
-    ![Using Future](how-to-cache-results-to-boost-performance/Using-Future.png)
+    ![Using Future](/blog/assets/images/how-to-cache-results-to-boost-performance/Using-Future.png)
 
      This solves the second problem but we still need to make sure that only one instance of `Future` is added to the `cache` field.
 

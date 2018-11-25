@@ -11,3 +11,6 @@ config.codekit
 ### CodeKit Patch ###
 */codekit-config.json
 .codekit-cache
+
+### Others ###
+**/.DS_Store
