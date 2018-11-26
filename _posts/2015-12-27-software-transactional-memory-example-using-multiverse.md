@@ -9,6 +9,7 @@ permalink: software-transactional-memory-example-using-multiverse
 author: Albert Attard
 published: true
 ---
+
 Transactions are an essential part of any business critical application as these ensure the integrity of the data being managed by the same application.  Transactions ensure that the data remains in a consistent and integral state after this is manipulated, thus mitigating the risk of an invalid state.  Databases are synonymous for transactions, and many programming languages rely on the underlying database to provide the required transactional support.  This works well when all state is found at the database level.  Unfortunately, this is not always the case and there can be cases where the state is found at the application level rather than the database level.  In this article, we will see how we can use Multiverse ([Git Hub](https://github.com/pveentjer/Multiverse)), a Software Transactional Memory, to provide transactions at the software level without using any databases.
 
 All code listed below is available at [Git Hub](https://github.com/javacreed/software-transactional-memory-example-using-multiverse).  Most of the examples will not contain the whole code and may omit fragments which are not relevant to the example being discussed. The readers can download or view all code from the above repository.
