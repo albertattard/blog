@@ -2,13 +2,14 @@
 layout: post
 title:  How to Modify a String Without Creating a New One
 description: Strings are meant to be immutable, but using reflection we can modify the unmodifiable.  This may seem like a shortcoming in the language.  Java provides protection against such modifications as described in this article.
-date: 2015-02-27 08:00:00 +0200
+date: 2015-02-05 08:00:00 +0200
 categories: video-properties
 img: how-to-modify-a-string-without-creating-a-new-one/splash.png
 permalink: how-to-modify-a-string-without-creating-a-new-one
 author: Albert Attard
 published: true
 ---
+
 In Java, `String`s ([Java Doc](http://docs.oracle.com/javase/7/docs/api/java/lang/String.html)) are immutable objects as documented in the class Java Doc
 
 > Strings are constant; their values cannot be changed after they are created ([reference](http://docs.oracle.com/javase/7/docs/api/java/lang/String.html))
