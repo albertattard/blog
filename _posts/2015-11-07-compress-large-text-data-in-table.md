@@ -139,7 +139,7 @@ The class shown above may seem long and overwhelming but it is quite straightfor
 1. The test inserts large text data into a database table.  This data is read from the resources available with the same project.  This is Shakespeare's Hamlet play ([Wiki](https://en.wikipedia.org/wiki/Hamlet)).
 
     ```java
-        // The data to be saved in the database
+        /* The data to be saved in the database */
         final String hamlet = IOUtils.toString(WriteDataToTable.class.getResourceAsStream("/Shakespeare Hamlet.txt"), "UTF-8");
     ```
 
@@ -172,7 +172,7 @@ The class shown above may seem long and overwhelming but it is quite straightfor
     ```java
         WriteDataToTable.LOGGER.debug("Inserting the sample data {} time in table '{}'", testSize, tableName);
         final long startedInMillis = System.currentTimeMillis();
-        // Insert the text several times in the database using prepared statement
+        /* Insert the text several times in the database using prepared statement */
         for (int i = 0; i < testSize; i++) {
           try (PreparedStatement statement = connection.prepareStatement("INSERT INTO `" + tableName + "` (`" + columnName + "`) VALUES (?)")) {
             setPreparedStatement(hamlet, statement);
@@ -254,7 +254,7 @@ The `verify()` method is described in detail next.
 1. The original data is read again from the source file.
 
     ```java
-        // The data to be saved in the database
+        /* The data to be saved in the database */
         final String hamlet = IOUtils.toString(ReadDataFromTable.class.getResourceAsStream("/Shakespeare Hamlet.txt"), "UTF-8");
     ```
 
@@ -366,7 +366,7 @@ public class Example1 {
 }
 ```
 
-Inserting a thousand records of the long text play, Shakespeare's Hamlet, into the table without modifying it take almost 8 seconds.  Reading such data is quite fast as it takes less than half of a second.
+Inserting a thousand records of the long text play, Shakespeare''s Hamlet, into the table without modifying it take almost 8 seconds.  Reading such data is quite fast as it takes less than half of a second.
 
 ## GZIP
 
@@ -414,7 +414,7 @@ The data is compressed before written to the database as shown next.
           statement.setBinaryStream(1, new ByteArrayInputStream(baos.toByteArray()));
 ```
 
-The data is compressed every time before writing it into the table to simulate a production environment.  One understands that compression will increase in the time required as additional processing is required.  On the other hand, such approach writes fewer data to the disk which should improve the write time and compensate for the time lost during compression.  Unfortunately, this approach is quite slow and the compression takes far longer than what is saved from writing fewer data to the disk.  Inserting a thousand records of the long text play, Shakespeare's Hamlet, into the table after compressing each instance takes more than 19 seconds.  Reading such data is slower too as it needs more than 2 seconds.  This approach reduced the space required by more than half, but it takes more to process.  In summary, this approach trades time with space.  You need less space on disk but requires further processing time.
+The data is compressed every time before writing it into the table to simulate a production environment.  One understands that compression will increase in the time required as additional processing is required.  On the other hand, such approach writes fewer data to the disk which should improve the write time and compensate for the time lost during compression.  Unfortunately, this approach is quite slow and the compression takes far longer than what is saved from writing fewer data to the disk.  Inserting a thousand records of the long text play, Shakespeare''s Hamlet, into the table after compressing each instance takes more than 19 seconds.  Reading such data is slower too as it needs more than 2 seconds.  This approach reduced the space required by more than half, but it takes more to process.  In summary, this approach trades time with space.  You need less space on disk but requires further processing time.
 
 ### LZ4
 

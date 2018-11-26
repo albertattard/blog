@@ -30,7 +30,7 @@ The order in which the variables `x` and `y` are declared is irrelevant, but the
 
 The transformations can happen at three different stages as shown next.
 
-![Code Transformations](/blog/assets/images/the-broken-singleton/Code-Transformations.png)
+![Code Transformations]({{ "/assets/images/the-broken-singleton/Code-Transformations.png" | absolute_url }})
 
 Each stage can transform the code as they see fit, always adhering to the constraints set by the Java Memory Model.  Most of the unpredictable transformation are made by the CPU (the lowest level), which is very good at reordering code such that it minimises the inefficiencies and maximising the performance of a program.  We will only introduce the Java Memory Model in this article as this is quite comprehensive and others, such as the [paper](http://rsim.cs.illinois.edu/Pubs/popl05.pdf) by Jeremy Manson, William Pugh and Sarita V. Adve, already did.
 

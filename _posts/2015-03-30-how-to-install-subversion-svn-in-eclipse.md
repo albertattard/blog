@@ -15,10 +15,10 @@ Subclipse is an Eclipse Plugin for SVN developed by Tigris ([Homepage](http://su
 
 The latest plugin update paths are listed in the following table require Eclipse 4.2 or later.
 
-| IDE    | Update Link                                                   |
-| ------ | ------------------------------------------------------------- |
-| Latest | `https://dl.bintray.com/subclipse/releases/subclipse/latest/` |
-| 4.2.x  | `https://dl.bintray.com/subclipse/releases/subclipse/4.2.x/`  |
+| IDE       | Update Link                                                   |
+| --------- | ------------------------------------------------------------- |
+| Latest    | `https://dl.bintray.com/subclipse/releases/subclipse/latest/` |
+| 4.2.x     | `https://dl.bintray.com/subclipse/releases/subclipse/4.2.x/`  |
 
 These old releases only require Eclipse 3.2 or later.
 

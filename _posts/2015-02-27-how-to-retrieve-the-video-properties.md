@@ -11,7 +11,7 @@ published: true
 ---
 The Windows operating system ([Homepage](http://windows.microsoft.com/en-gb/windows/home)) provides useful information about video files playable by Windows Media Player ([Homepage](http://windows.microsoft.com/en-us/windows/windows-media-player)).  This information includes the video length, frame width and height and other similar properties as shown in the following image.
 
-![Video and Audio Properties](/blog/assets/images/how-to-retrieve-the-video-properties/Video-and-Audio-Properties.png)
+![Video and Audio Properties]({{ "/assets/images/how-to-retrieve-the-video-properties/Video-and-Audio-Properties.png" | absolute_url }})
 
 Unfortunately there is no Java API which can easily retrieve such information.  Instead we need to rely on third party native libraries such as MediaInfo ([Homepage](https://mediaarea.net/en/MediaInfo)) and create wrappers around it.  In this article we will see how to use the aforementioned third party native library to retrieve the video properties from a Java application.  Please note that the examples shown in this article are based on the Windows 64 bit version of Command Line Interface version 0.7.72.  Different MediaInfo versions may produce different outputs that those shown here.
 
@@ -23,7 +23,7 @@ This article starts from the configuration process, where it describes from wher
 
 As mentioned already, the examples shown in this article make use of a third party native library named MediaInfo, which library can be downloaded from: [http://mediaarea.net/en/MediaInfo/Download](http://mediaarea.net/en/MediaInfo/Download).  As shown in the following image, the MediaInfo comes in several flavours.  For the purpose of this article, we only need the Command Line Interface version.
 
-![Download the CLI Version](/blog/assets/images/how-to-retrieve-the-video-properties/Download-the-CLI-Version.png)
+![Download the CLI Version]({{ "/assets/images/how-to-retrieve-the-video-properties/Download-the-CLI-Version.png" | absolute_url }})
 
 **Please make sure you read the terms and conditions before downloading this library**.
 

@@ -23,7 +23,7 @@ This article was inspired by a [video](http://vimeo.com/117411144) posted by Hei
 
 Before we see how to modify a `String` we need to understand how the `String` object save its value.  The `String`s were designed to be immutable, thus their values will not change.  The `String` class makes use of a character (primitive type) array to store its value as shown in the following image.
 
-![String's Field value](/blog/assets/images/how-to-modify-a-string-without-creating-a-new-one/String-Field-Value.png)
+![String's Field value]({{ "/assets/images/how-to-modify-a-string-without-creating-a-new-one/String-Field-Value.png" | absolute_url }})
 
 The array is created when the `String` object is instantiated and this is never modified.  Arrays provide high access speed and are the perfect data structure for situations where the length is known beforehand and when resizing is not required.
 

@@ -1,16 +1,15 @@
 title: Java Creed
 description: Java Creed Blog
-url: "https://javacreed.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://javacreed.github.io"
 permalink: ':title/'
-baseurl: "/blog" # the subpath of your site, e.g. /blog
+baseurl: "/blog"
 
 # Comments
 discus_identifier: javacreed
 txtpen_identifier: javacreed
 
 # Social settings
-# twitter_url: https://twitter.com/javacreed
-# facebook_url: https://facebook.com/
-# googleplus_url: https://plus.google.com/
-# instagram_url: https://instagram.com
-github_url: https://github.com/javacreed/
+twitter_url: https://twitter.com/javacreed
+facebook_url: https://facebook.com/javacreed
+linkedin_url: https://www.linkedin.com/in/javacreed
+github_url: https://github.com/javacreed

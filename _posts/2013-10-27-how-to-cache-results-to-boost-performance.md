@@ -15,7 +15,7 @@ Albert Einstein ([Wiki](http://en.wikipedia.org/wiki/Albert_Einstein)) defines _
 
 In programming we can avoid _insanity_ by using caching.  Caching, together with avoiding insanity, can boost performance as we do not have to compute complex algorithms again and again.  Instead we simply use the previously computed values.  Caching saves time by using more memory.  Instead of computing something again, the result obtained before is saved in memory and retrieved from memory next time required.  Large cache deposits will require more space, and since memory is a finite resource we cannot cache everything.  We should choose what we cache with care.
 
-In this article we will see how to implement a good, thread-safe caching algorithm that can help boosting the performance.  If you are interested in Spring caching, please refer to another article called: _Caching Made Easy with Spring_ ([Article](http://www.javacreed.com/caching-made-easy-with-spring/)).
+In this article we will see how to implement a good, thread-safe caching algorithm that can help boosting the performance.  If you are interested in Spring caching, please refer to another article called: _Caching Made Easy with Spring_ ([Article]({{ "/caching-made-easy-with-spring/" | absolute_url }})).
 
 All code listed below is available at: [https://github.com/javacreed/how-to-cache-results-to-boost-performance](https://github.com/javacreed/how-to-cache-results-to-boost-performance).  Most of the examples will not contain the whole code and may omit fragments which are not relevant to the example being discussed. The readers can download or view all code from the above link.
 
@@ -69,17 +69,17 @@ The example shown above, caches the values in a `Map` ([Java Doc](http://docs.or
 
 1. **This approach is not thread-safe**
 
-    This problem can be mitigated by using a concurrent version of the `Map`, such as `ConcurrentMap` ([Java Doc](http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ConcurrentMap.html)).  Alternatively, you can guard the access to the map by using locks ([Article](http://www.javacreed.com/understanding-threads-monitors-and-locks/)) but the other approach is preferred as it scales better.
+    This problem can be mitigated by using a concurrent version of the `Map`, such as `ConcurrentMap` ([Java Doc](http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ConcurrentMap.html)).  Alternatively, you can guard the access to the map by using locks ([Article]({{ "/understanding-threads-monitors-and-locks/ | absolute_url }})) but the other approach is preferred as it scales better.
 
 1. **The same value can be computed more than once**
 
     Say that two threads need to retrieve the same Fibonacci number which is not in cache.  Using this approach, both threads will end up computing the same value.  Thus the same value ends up being computed twice.  The following image captures this problem.
 
-    ![Compute the same value twice](/blog/assets/images/how-to-cache-results-to-boost-performance/Compute-the-same-value-twice.png)
+    ![Compute the same value twice]({{"/assets/images/how-to-cache-results-to-boost-performance/Compute-the-same-value-twice.png" | absolute_url }})
 
     This problem not only it defeats the caching purpose, but duplicates the computational power required (or slows the end result as the machine throughput is halved) as shown in the following image.
 
-    ![Use twice the required resources](/blog/assets/images/how-to-cache-results-to-boost-performance/Use-twice-the-required-resources.png)
+    ![Use twice the required resources]({{"/assets/images/how-to-cache-results-to-boost-performance/Use-twice-the-required-resources.png" | absolute_url }})
 
     This problem may seem mild but it can have serious implications to both memory and CPU resources.  Note that the purpose of using caching is to reduce the computations by retrieving the result from cache.
 
@@ -200,7 +200,7 @@ This class is less than 55 lines of code and meets all our requirements as expla
 
     The `Future` represents the code that will compute and return the value.  There will be only one future for any given key (as we will see later on).  When thread 1 adds the `Future` instance to the cache, thread 2 will obtain the same `Future` instance and will both wait for this to finish.
 
-    ![Using Future](/blog/assets/images/how-to-cache-results-to-boost-performance/Using-Future.png)
+    ![Using Future]({{"/assets/images/how-to-cache-results-to-boost-performance/Using-Future.png" | absolute_url }})
 
      This solves the second problem but we still need to make sure that only one instance of `Future` is added to the `cache` field.
 
@@ -414,4 +414,4 @@ As shown on the output above, once the first value is computed and saved in cach
 
 ## Conclusion
 
-Caching is very handy as it can boost the performance of an application.  But when done incorrectly can cripple an application as described in this article.  Spring provides caching as described in the article titled: _Caching Made Easy with Spring_ ([Article](http://www.javacreed.com/caching-made-easy-with-spring/)).  This simplifies caching further as you do not have to worry about the caching algorithm.  With that said, such approach has its limitations as it does not work well with recursion algorithms.
+Caching is very handy as it can boost the performance of an application.  But when done incorrectly can cripple an application as described in this article.  Spring provides caching as described in the article titled: _Caching Made Easy with Spring_ ([Article]({{"/caching-made-easy-with-spring/" | absolute_url }})).  This simplifies caching further as you do not have to worry about the caching algorithm.  With that said, such approach has its limitations as it does not work well with recursion algorithms.
