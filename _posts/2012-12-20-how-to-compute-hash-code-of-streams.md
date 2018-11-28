@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Hello World
+title:  How to compute the SHA-1 hash-code of a stream
 description: This article shows how to compute the SHA-1 hash-code of a stream
 date: 2015-02-06 08:00:00 +0200
 categories: SHA-1, Hash Algorithms, Streams
