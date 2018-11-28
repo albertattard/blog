@@ -1159,6 +1159,7 @@ blockquote {
   padding: 0 1em 0 0;
 }
 .social-icons li a {
+  color: rgba(255, 255, 255, 0.9);
   font-size: 2rem;
   -webkit-transition: all .25s;
   transition: all .25s;
