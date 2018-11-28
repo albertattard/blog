@@ -782,13 +782,12 @@ body {
 }
 
 a {
-  color: #949090;
+  color: #0366d6;
   text-decoration: none;
-  -webkit-transition: color 0.2s linear;
-  transition: color 0.2s linear;
 }
+
 a:hover {
-  color: #615b5b;
+  text-decoration: underline;
 }
 
 .highlight {
@@ -798,17 +797,18 @@ a:hover {
 }
 
 .highlighter-rouge {
-  color: #e74b3c;
-  font-weight: 400;
-  border: 1px solid #607D8B;
+  background-color: rgba(27,31,35,.05);
   border-radius: 3px;
-  padding: 0.1rem 0.5rem;
+  font-size: 85%;
+  margin: 0;
+  padding: .2em .4em;
 }
 
 pre {
   padding: 1rem 2rem;
   overflow-x: auto;
 }
+
 pre code {
   border: 0;
   padding-right: 0;
@@ -840,6 +840,7 @@ blockquote {
 .logo {
   text-align: -webkit-left;
 }
+
 .logo .logo-link {
   display: inline-block;
   text-decoration: none;
@@ -853,12 +854,15 @@ blockquote {
   transition: all .3s;
   padding-left: 10px;
 }
+
 .logo .logo-link:hover {
   color: rgba(245, 222, 179, 0.75);
 }
+
 .logo .hat {
   width: 4rem;
 }
+
 .logo .hat path {
   fill: #6f5959;
 }
@@ -1256,6 +1260,9 @@ table {
 
 table thead {
   background:rgba(180,180,180,0.5);
+}
+
+table tbody {
 }
 
 tbody tr:nth-of-type(even){
