@@ -7,9 +7,9 @@ author: Albert Attard
 permalink: about-the-website
 ---
 
-This blog aims to provide detailed articles and tutorials (in the form of [videos](/blog/videos.html)) about various Java technologies and designs patterns.  These articles and tutorials are written from a developer perspective and most of the articles include examples.  The provided examples are not simple code fragments, but complete projects which everyone can freely download and analyse from [Java Creed Git Hub profile](https://github.com/javacreed).
+This blog aims to provide detailed articles and tutorials (in the form of [videos](/videos.html)) about various Java technologies and designs patterns.  These articles and tutorials are written from a developer perspective and most of the articles include examples.  The provided examples are not simple code fragments, but complete projects which everyone can freely download and analyse from [Java Creed Git Hub profile](https://github.com/javacreed).
 
-The objective is to add new content on a weekly basis, but while I will do my very best, I cannot promise that.  If you want me to write about some Java technology, please let me know by contacting us at [albert@javacreed.com](mailto:albert@javacreed.com).
+The objective is to add new content on a weekly basis, but while I will do my very best, I cannot promise that.  If you want me to write about some Java technology, please let me know by email at [albert@javacreed.com](mailto:albert@javacreed.com) or [albertattard@gmail.com](mailto:albertattard@gmail.com).
 
 ## Why do I do all this?
 
