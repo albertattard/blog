@@ -1,8 +1,8 @@
 title: Java Creed
 description: Java Creed Blog
-url: "https://javacreed.github.io"
+url: "https://javacreed.com"
 permalink: ':title/'
-baseurl: "/blog"
+baseurl: "/"
 
 # Comments
 discus_identifier: javacreed
